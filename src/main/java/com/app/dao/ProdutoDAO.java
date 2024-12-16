@@ -5,11 +5,12 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import com.app.connection.ConnectionFactory;
 import com.app.model.Produto;
 
-
+@Component
 public class ProdutoDAO {
 	
 	public Produto save(Produto produto) {

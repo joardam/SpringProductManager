@@ -5,10 +5,12 @@ import java.util.List;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
+import org.springframework.stereotype.Component;
 
 import com.app.connection.ConnectionFactory;
 import com.app.model.Categoria;
 
+@Component
 public class CategoriaDAO {
 	
 	public Categoria save(Categoria categoria) {
