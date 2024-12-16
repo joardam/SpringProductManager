@@ -1,4 +1,4 @@
-package com.app.model.dao;
+package com.app.dao;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Session;
 
 import com.app.connection.ConnectionFactory;
-import com.app.model.bean.Categoria;
+import com.app.model.Categoria;
 
 public class CategoriaDAO {
 	

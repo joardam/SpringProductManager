@@ -1,6 +1,6 @@
 package com.app.tests;
 
-import com.app.model.dao.ProdutoDAO;
+import com.app.dao.ProdutoDAO;
 
 public class ProdutoTest {
 	public static void main(String[] args) {

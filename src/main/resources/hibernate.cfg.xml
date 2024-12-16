@@ -29,8 +29,8 @@
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <!-- Entities -->
-        <mapping class="com.app.model.bean.Categoria"/>
-        <mapping class="com.app.model.bean.Produto"/>
+        <mapping class="com.app.model.Categoria"/>
+        <mapping class="com.app.model.Produto"/>
         
     </session-factory>
 </hibernate-configuration>
