@@ -71,14 +71,13 @@ public class ProdutoDAO {
 		return produtos;
 	}
 	
-	
-	public Produto remove(Integer id) {
+
+	public Produto removeById(Integer id) {
 		Session session = new ConnectionFactory().getConnection();
 		Produto produto = null;
 		
 		try {
-			
-			
+
 			produto = session.find(Produto.class, id);
 			
 			session.getTransaction().begin();
@@ -96,6 +95,28 @@ public class ProdutoDAO {
 		
 		return produto;
 	}
+
+	public Produto remove(Produto produto) {
+		Session session = new ConnectionFactory().getConnection();
+		
+		try {
+			
+			session.getTransaction().begin();
+			session.remove(produto);
+			
+			session.getTransaction().commit();
+			
+		}catch(Exception e) {
+			System.err.println(e);
+			session.getTransaction().rollback();
+		} finally {
+			session.close();
+		}
+		
+		
+		return produto;
+	}
+
 	
 	
 }

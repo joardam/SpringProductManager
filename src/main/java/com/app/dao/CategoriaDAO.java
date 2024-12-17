@@ -71,7 +71,7 @@ public class CategoriaDAO {
 	}
 	
 	
-	public Categoria remove(Integer id) {
+	public Categoria removeById(Integer id) {
 		Session session = new ConnectionFactory().getConnection();
 		Categoria categoria = null;
 		

@@ -1,3 +1,4 @@
+package com.app;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
@@ -22,11 +23,9 @@ public static void main(String[] args) {
 		
 		produtoController.getProduto().setDescricao("sambitas");
 		produtoController.getProduto().setQtd(10);
-		produtoController.getProduto().setValor(4.5);
+		produtoController.getProduto().setValor(4.6);
 		produtoController.getProduto().setCategoria(categoria);
 		
-		
-		produtoController.save();
 		
 		System.out.println("print");
 	

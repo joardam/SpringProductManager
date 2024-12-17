@@ -11,7 +11,10 @@ public class ProdutoTest {
 		ProdutoDAO daoP = new ProdutoDAO();
 		
 		
-		daoP.remove(2);
+
+		daoP.removeById(2);
+		
+
 		
 		
 
