@@ -1,39 +1,33 @@
 
 <!DOCTYPE xml>
 
-<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.app</groupId>
-  <artifactId>test</artifactId>
+  <artifactId>com.app</artifactId>
+   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>SpringProducManager</name>
+  <url>http://maven.apache.org</url>
+
   
   
   <properties>
   	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
-  <build>
-  	<finalName>${project.artifactId}}</finalName>
-  	<plugins>
-  		<plugin>
-  		<groupId>org.apache.maven.plugins</groupId>
-  		<artifactId>maven-compiler-plugin</artifactId>
-  		<version>3.1</version>
-  		<configuration>
-  			<source>1.8</source>
-  			<target>1.8</target>
-  		</configuration>
-  		
-  		</plugin>
-  	</plugins>
-  
-  </build>
-  
-  
   
   <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+ 
+  
  <!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 	<dependency>
   		<groupId>org.postgresql</groupId>
@@ -65,8 +59,49 @@
 		<version>2.2.10</version>
 		<scope>compile</scope>
 	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
+	<dependency>
+	    <groupId>org.apache.maven.plugins</groupId>
+	    <artifactId>maven-war-plugin</artifactId>
+	    <version>3.2.2</version>
+	</dependency>
 
   </dependencies>
+  
+  
+<build>
+	
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<verbose>true</verbose>
+					<source>1.8</source>
+					<target>1.8</target>
+					<showWarnings>true</showWarnings>
+				</configuration>
+			</plugin>
+			<!--<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/</path>
+					<contextReloadable>true</contextReloadable>
+				</configuration>
+			</plugin>-->
+		</plugins>
+		  
+    <finalName>SpringProductManager</finalName>
+  </build>
+		
+	
+  
+  
+  
   
  
 </project>
