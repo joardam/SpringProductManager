@@ -72,6 +72,8 @@ public class ProdutoController {
 				break;	
 			}
 			
+			
+			
 		} catch(Exception e){
 			System.err.println(e);
 		}
@@ -79,6 +81,22 @@ public class ProdutoController {
 	}
 	
 	
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public EditMode getEditMode() {
+		return editMode;
+	}
+
+	public void setEditMode(EditMode editMode) {
+		this.editMode = editMode;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
 	public void remove(Produto produto) {
 		try {
 			produtoDAO.remove(produto);
