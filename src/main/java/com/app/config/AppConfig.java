@@ -6,9 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = {
 		"com.app.dao",
-		"com.app.controller"	
+		"com.app.controller"
 })
 
 public class AppConfig {
-
 }
