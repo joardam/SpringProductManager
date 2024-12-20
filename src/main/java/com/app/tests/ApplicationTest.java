@@ -4,6 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.app.config.AppConfig;
+import com.app.controller.CategoriaController;
 import com.app.controller.ProdutoController;
 
 import com.app.model.Categoria;
@@ -17,14 +18,12 @@ public static void main(String[] args) {
 		
 		
 		
-		ProdutoController produtoController = (ProdutoController) context.getBean("produtoController");
+		CategoriaController categoriaController = (CategoriaController) context.getBean("categoriaController");
 		
-		
-		
-		System.out.println(produtoController.getEditMode());
-		;
-		
-	
+		for(Categoria categoria : categoriaController.getListCategoria()) {
+			System.out.println(categoria.getDescricao());
+			
+		}
 		
 		
 		System.out.println("print");

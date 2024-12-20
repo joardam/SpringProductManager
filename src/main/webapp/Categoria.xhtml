@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+ <h:head>
+	
+</h:head>
+
+<h:head></h:head>
+
+
+<h:body>
+<h1> Cadastro de Categoria </h1>
+	<h:form id = "frmCategoria">
+
+
+	Nome: <h:inputText value="#{categoriaController.categoria.descricao}" />
+   
+    <h:commandButton value="Salvar" action="#{categoriaController.save}" >
+        <f:ajax execute="frmCategoria" render="@form" />
+    </h:commandButton>
+
+    <h:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" >
+        <f:ajax execute="frmCategoria" render="@form" />
+    </h:commandButton>
+
+
+    <h:dataTable value = "#{categoriaController.listCategoria}" var="c" id="dtCategoria">
+         <h:column>
+            <f:facet name="header">Nome</f:facet>
+            #{c.descricao}
+        </h:column>
+ 
+ 		 
+ 		  <h:column>
+            <f:facet name="header">Ação</f:facet>
+            <h:commandButton value="Excluir" action="#{categoriaController.remove(c)}" onclick="return window.confirm('confirma ?')">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+
+            <h:commandButton value="Editar" action="#{categoria.Controller.edit(c)}">
+                <f:ajax render="@form"/>
+            </h:commandButton>
+        </h:column>
+ 		 
+ 		 
+    </h:dataTable>
+	
+	</h:form>
+</h:body>
+
+</html>

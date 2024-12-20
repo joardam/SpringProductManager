@@ -30,9 +30,7 @@ public class ProdutoController {
 	
 	private EditMode editMode = EditMode.VIEW;
 	
-	public void setMode(EditMode editMode) {
-		this.editMode = editMode;
-	}
+	
 
 	@PostConstruct
 	public void init() {
@@ -43,14 +41,13 @@ public class ProdutoController {
 		}
 	}
 	
-	
-	public void onload() {
-		this.listProduto = this.produtoDAO.findAll();
+	public void setMode(EditMode editMode) {
+		this.editMode = editMode;
 	}
 	
 	
 	public List<Produto> getListProduto() {
-		return listProduto;
+		return this.listProduto;
 	}
 
 	public void setListProduto(List<Produto> listProduto) {

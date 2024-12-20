@@ -71,6 +71,26 @@ public class CategoriaDAO {
 	}
 	
 	
+	public Categoria remove(Categoria categoria) {
+		Session session = new ConnectionFactory().getConnection();
+		
+		try {
+			session.getTransaction().begin();
+			session.remove(categoria);
+			session.getTransaction().commit();
+			
+		}catch(Exception e){
+			System.err.println(e);
+			session.getTransaction().rollback();
+			
+		}finally {
+			session.close();
+		}
+		
+		return categoria;
+	}
+	
+	
 	public Categoria removeById(Integer id) {
 		Session session = new ConnectionFactory().getConnection();
 		Categoria categoria = null;

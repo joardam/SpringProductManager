@@ -14,7 +14,6 @@ public class Categoria {
 	private String descricao;
 	
 	
-	
 	public Integer getId() {
 		return id;
 	}
