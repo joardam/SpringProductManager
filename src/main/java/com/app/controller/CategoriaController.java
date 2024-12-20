@@ -123,7 +123,7 @@ public class CategoriaController {
 	}
 	
 	public void cancel() {
-		this.editMode = EditMode.EDIT;
+		this.editMode = EditMode.VIEW;
 		this.categoria = new Categoria();
 		
 	}	

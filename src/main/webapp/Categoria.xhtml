@@ -22,7 +22,7 @@
         <f:ajax execute="frmCategoria" render="@form" />
     </h:commandButton>
 
-    <h:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" >
+    <h:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" >
         <f:ajax execute="frmCategoria" render="@form" />
     </h:commandButton>
 
@@ -40,7 +40,7 @@
                 <f:ajax render="@form"/>
             </h:commandButton>
 
-            <h:commandButton value="Editar" action="#{categoria.Controller.edit(c)}">
+            <h:commandButton value="Editar" action="#{categoriaController.edit(c)}">
                 <f:ajax render="@form"/>
             </h:commandButton>
         </h:column>
