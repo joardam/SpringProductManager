@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+ <h:head>
+	
+</h:head>
+
+<h:head></h:head>
+
+
+<h:body>
+    <h:dataTable value = "#{produtoController.listProduto}" var="c" id="dtProduct">
+         <h:column>
+            <f:facet name="header">Nome</f:facet>
+            #{c.descricao}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Preço</f:facet>
+            #{c.valor}
+        </h:column>
+        <h:column>
+            <f:facet name="header">Quantidade</f:facet>
+            #{c.qtd}
+ 		 </h:column>
+    </h:dataTable>
+
+</h:body>
+
+</html>

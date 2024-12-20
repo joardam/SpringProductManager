@@ -5,7 +5,9 @@ import org.springframework.context.support.AbstractApplicationContext;
 
 import com.app.config.AppConfig;
 import com.app.controller.ProdutoController;
+
 import com.app.model.Categoria;
+import com.app.model.Produto;
 
 
 public class Application {
@@ -13,18 +15,16 @@ public class Application {
 public static void main(String[] args) {
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		
-		ProdutoController produtoController = (ProdutoController)context.getBean("produtoController");
 		
-		Categoria categoria = new Categoria();
-		categoria.setId(2);
 		
+		ProdutoController listProdutoController = (ProdutoController) context.getBean("produtoController");
 		
 		
 		
-		produtoController.getProduto().setDescricao("sambitas");
-		produtoController.getProduto().setQtd(10);
-		produtoController.getProduto().setValor(4.6);
-		produtoController.getProduto().setCategoria(categoria);
+		for(Produto p : listProdutoController.getListProduto() ) {
+			System.out.println(p.getDescricao());
+		}
+			
 		
 		
 		System.out.println("print");
