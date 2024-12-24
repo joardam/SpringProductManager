@@ -123,7 +123,16 @@ public class ProdutoController {
         this.produto = new Produto() ;
     }
 	
-	
+	public String goToMenu() {
+		try{
+		cancel();
+		return "Menu.xhtml?faces-redirect=true";
+		
+		} catch(Exception e) {
+			System.err.println(e);
+		}
+		return null;
+	}
 	
 	
 	
