@@ -2,56 +2,64 @@
 <!DOCTYPE html >
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+	
 
  <h:head>
 	
 </h:head>
 
-<h:head></h:head>
+
 
 
 <h:body>
+
+
 <h:form>
-<h:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
+<p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
 </h:form>
+
 <h1> Cadastro de Categoria </h1>
+	
 	<h:form id = "frmCategoria">
-
-
-	Nome: <h:inputText value="#{categoriaController.categoria.descricao}" />
+	
+	<p:outputLabel value="Nome: " />
+	<p:inputText value="#{categoriaController.categoria.descricao}" />
    
-    <h:commandButton value="Salvar" action="#{categoriaController.save}" >
-        <f:ajax execute="frmCategoria" render="@form" />
-    </h:commandButton>
+    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria" >
+    
+    </p:commandButton>
+	</h:form>
+	
+	
+    <p:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" update="frmCategoria">
+    </p:commandButton>
 
-    <h:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" >
-        <f:ajax execute="frmCategoria" render="@form" />
-    </h:commandButton>
 
-
-    <h:dataTable value = "#{categoriaController.listCategoria}" var="c" id="dtCategoria">
-         <h:column>
+    <p:dataTable value = "#{categoriaController.listCategoria}" var="c" id="dtCategoria">
+        <p:column>
             <f:facet name="header">Nome</f:facet>
             #{c.descricao}
-        </h:column>
+        </p:column>
  		 
  		 
- 		  <h:column>
-            <f:facet name="header">Ação</f:facet>
-            <h:commandButton value="Excluir" action="#{categoriaController.remove(c)}" onclick="return window.confirm('confirma ?')">
-                <f:ajax render="@form"/>
-            </h:commandButton>
+ 		  <p:column>
+           <f:facet name="header">Ação</f:facet>
+           <p:commandButton value="Excluir" action="#{categoriaController.remove(c)}" onclick="return window.confirm('confirma ?')" update="dtCategoria">
+                
+            </p:commandButton>
 
-            <h:commandButton value="Editar" action="#{categoriaController.edit(c)}">
-                <f:ajax render="@form"/>
-            </h:commandButton>
-        </h:column>
+            <p:commandButton value="Editar" action="#{categoriaController.edit(c)}" update="frmCategoria">
+                
+            </p:commandButton>
+        </p:column>
  		 
  		 
-    </h:dataTable>
+    </p:dataTable>
 	
-	</h:form>
+	
 </h:body>
 
 </html>

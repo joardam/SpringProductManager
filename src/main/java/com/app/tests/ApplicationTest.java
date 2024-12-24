@@ -20,9 +20,6 @@ public static void main(String[] args) {
 		
 		
 		CategoriaConverter categoriaConverter = (CategoriaConverter) context.getBean("categoriaConverter");
-	
-		
-		
 		
 		
 		System.out.println("end");
