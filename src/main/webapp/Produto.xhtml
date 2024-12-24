@@ -15,17 +15,22 @@
 <h1> Cadastro de Produto </h1>
 	<h:form id = "frmProduct">
 
-
+	
 	Nome: <h:inputText value="#{produtoController.produto.descricao}" />
     valor: <h:inputText value="#{produtoController.produto.valor}" />
     Quantidade: <h:inputText value="#{produtoController.produto.qtd}"/>
-   
+    
+   Categoria:
+    <h:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
+        <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" 
+                       itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
+    </h:selectOneMenu>
+  
+	
     <h:commandButton value="Salvar" action="#{produtoController.save}" >
-        <f:ajax execute="frmProduct" render="@form" />
     </h:commandButton>
 
     <h:commandButton rendered="#{produtoController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" >
-        <f:ajax execute="frmProduct" render="@form" />
     </h:commandButton>
 
 
@@ -47,6 +52,7 @@
             #{c.categoria.descricao}
  		 </h:column>
  		 
+ 		 
  		  <h:column>
             <f:facet name="header">Ação</f:facet>
             <h:commandButton value="Excluir" action="#{produtoController.remove(c)}" onclick="return window.confirm('confirma ?')">
@@ -60,6 +66,8 @@
  		 
  		 
     </h:dataTable>
+	
+	<h:message for="categoria" style="color: red; font-weight: bold;" />
 	
 	</h:form>
 </h:body>

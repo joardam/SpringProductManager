@@ -4,10 +4,12 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.app.dao.CategoriaDAO;
 import com.app.enums.EditMode;
@@ -16,7 +18,7 @@ import com.app.model.Categoria;
 
 @Component
 @ManagedBean(name = "categoriaController")
-@SessionScoped
+@SessionScope
 public class CategoriaController {
 	
 	
@@ -51,6 +53,7 @@ public class CategoriaController {
 	}
 
 	private List<Categoria> listCategoria;
+	
 	
 	private EditMode editMode = EditMode.VIEW;
 	
@@ -94,8 +97,10 @@ public class CategoriaController {
 				listCategoria.add(this.categoria);
 				break;
 			}	
-		
+			cancel();
 		}
+		
+		
 		 catch(Exception e) {
 			System.out.println(e);
 		 	}

@@ -6,7 +6,8 @@ import org.springframework.context.support.AbstractApplicationContext;
 import com.app.config.AppConfig;
 import com.app.controller.CategoriaController;
 import com.app.controller.ProdutoController;
-
+import com.app.converter.CategoriaConverter;
+import com.app.dao.CategoriaDAO;
 import com.app.model.Categoria;
 import com.app.model.Produto;
 
@@ -18,15 +19,13 @@ public static void main(String[] args) {
 		
 		
 		
-		CategoriaController categoriaController = (CategoriaController) context.getBean("categoriaController");
-		
-		for(Categoria categoria : categoriaController.getListCategoria()) {
-			System.out.println(categoria.getDescricao());
-			
-		}
+		CategoriaConverter categoriaConverter = (CategoriaConverter) context.getBean("categoriaConverter");
+	
 		
 		
-		System.out.println("print");
+		
+		
+		System.out.println("end");
 	
 		((AbstractApplicationContext) context).close();
 		

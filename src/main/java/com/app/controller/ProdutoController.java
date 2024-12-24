@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.app.dao.ProdutoDAO;
 import com.app.enums.EditMode;
@@ -18,7 +19,7 @@ import com.app.model.Produto;
 
 @Component
 @ManagedBean(name = "produtoController")
-@SessionScoped
+@SessionScope
 public class ProdutoController {
 	
 	@Autowired
@@ -30,7 +31,9 @@ public class ProdutoController {
 	
 	private EditMode editMode = EditMode.VIEW;
 	
-	
+	public void setMode(EditMode editMode) {
+		this.editMode = editMode;
+	}
 
 	@PostConstruct
 	public void init() {
@@ -41,13 +44,14 @@ public class ProdutoController {
 		}
 	}
 	
-	public void setMode(EditMode editMode) {
-		this.editMode = editMode;
+	
+	public void onload() {
+		this.listProduto = this.produtoDAO.findAll();
 	}
 	
 	
 	public List<Produto> getListProduto() {
-		return this.listProduto;
+		return listProduto;
 	}
 
 	public void setListProduto(List<Produto> listProduto) {
@@ -68,7 +72,7 @@ public class ProdutoController {
 				listProduto.add(this.produto);
 				break;	
 			}
-			
+			cancel();
 			
 			
 		} catch(Exception e){
