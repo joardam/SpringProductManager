@@ -16,6 +16,7 @@
 
 <h:body>
 
+<f:event type="preRenderView" listener="#{categoriaController.init}" />
 
 <h:form>
 <p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
@@ -47,7 +48,10 @@
  		 
  		  <p:column>
            <f:facet name="header">Ação</f:facet>
-           <p:commandButton value="Excluir" action="#{categoriaController.remove(c)}" onclick="return window.confirm('confirma ?')" update="dtCategoria">
+           <p:commandButton value="Excluir" 
+           action="#{categoriaController.remove(c)}" 
+           onclick="return window.confirm('Tem certeza , ao apagar essa Categoria? Todos itens relacionados essa categoria serão associados a NULL')"
+           update="dtCategoria">
                 
             </p:commandButton>
 

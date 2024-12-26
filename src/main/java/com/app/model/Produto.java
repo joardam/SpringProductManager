@@ -4,9 +4,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
+
 public class Produto {
 	
 	@Id
@@ -16,13 +18,17 @@ public class Produto {
 	private Double valor;
 	private Integer qtd;
 	
+	
+	
 	@ManyToOne
+	@JoinColumn(name = "categoria_id", nullable = true)
 	private Categoria categoria;
 	
 	public Integer getQtd() {
 		return qtd;
 	}
-
+	
+	
 	public void setQtd(Integer qtd) {
 		this.qtd = qtd;
 	}
@@ -60,9 +66,5 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
-	
-	
-	
-	
 	
 }

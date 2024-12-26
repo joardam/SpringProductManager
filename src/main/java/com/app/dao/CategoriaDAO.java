@@ -76,6 +76,13 @@ public class CategoriaDAO {
 		
 		try {
 			session.getTransaction().begin();
+			
+			String hql = "UPDATE Produto p SET p.categoria = NULL WHERE p.categoria = :categoria";
+	        session.createQuery(hql)
+	               .setParameter("categoria", categoria)
+	               .executeUpdate();
+
+	       
 			session.remove(categoria);
 			session.getTransaction().commit();
 			
@@ -99,6 +106,12 @@ public class CategoriaDAO {
 			categoria = session.find(Categoria.class,id);
 			
 			session.getTransaction().begin();
+			
+			String hql = "UPDATE Produto p SET p.categoria = NULL WHERE p.categoria = :categoria";
+	        session.createQuery(hql)
+	               .setParameter("categoria", categoria)
+	               .executeUpdate();
+			
 			session.remove(categoria);
 			session.getTransaction().commit();
 			

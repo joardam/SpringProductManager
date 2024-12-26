@@ -4,8 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
-
+import javax.persistence.JoinColumn;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +23,7 @@ public class CategoriaController {
 	
 	@Autowired
 	private CategoriaDAO categoriaDAO;
+	
 	
 	private Categoria categoria = new Categoria();
 	
@@ -63,7 +63,6 @@ public class CategoriaController {
 	public void init() {
 		try {
 			listCategoria = this.categoriaDAO.findAll();
-			
 		} catch(Exception e) {
 			System.err.println(e);			
 		}

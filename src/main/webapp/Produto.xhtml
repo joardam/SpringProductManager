@@ -13,6 +13,9 @@
 
 
 <h:body>
+
+<f:event type="preRenderView" listener="#{produtoController.init}" />
+
 <h:form>
 <p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
 </h:form>
@@ -25,7 +28,7 @@
     valor: <p:inputText value="#{produtoController.produto.valor}" />
     Quantidade: <p:inputText value="#{produtoController.produto.qtd}"/>
     
-   Categoria:
+   	Categoria:
     <p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
         <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" 
                        itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />

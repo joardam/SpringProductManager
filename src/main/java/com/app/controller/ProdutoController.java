@@ -45,9 +45,7 @@ public class ProdutoController {
 	}
 	
 	
-	public void onload() {
-		this.listProduto = this.produtoDAO.findAll();
-	}
+	
 	
 	
 	public List<Produto> getListProduto() {
