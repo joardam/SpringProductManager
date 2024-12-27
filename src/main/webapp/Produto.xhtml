@@ -3,13 +3,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	>
+
 
  <h:head>
 	
 </h:head>
 
-<h:head></h:head>
 
 
 <h:body>
@@ -43,12 +44,12 @@
 		        <p:inputText id="quantidade" value="#{produtoController.produto.qtd}" />
 				
 				
-				<!-- Categoria -->
-				<p:outputLabel value="Categoria" for="categoria" />
-				<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
-				    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-				    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
-				</p:selectOneMenu>
+			<!-- Categoria -->
+		<p:outputLabel value="Categoria" for="categoria" />
+		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
+		    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+		    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
+		</p:selectOneMenu>
 	
 		        
 				</p:panelGrid>
@@ -62,25 +63,50 @@
 		
 	 
 	 
+  	<h:form style="text-align: right;">
+    	<p:commandButton value="Buscar" icon="ui-icon-search" />
+	</h:form>
+
+	<h:form>
+	
+	</h:form>
+  
 	
     <p:dataTable value = "#{produtoController.listProduto}" var="c" id="dtProduct">
          <p:column>
-            <f:facet name="header">Nome</f:facet>
+            <f:facet name="header">
+            
+            	<p:inputText placeholder= "buscar"/>
+            	 Nome
+            		
+            </f:facet>
+           
             #{c.descricao}
+            
         </p:column>
+        	
         
         <p:column>
-            <f:facet name="header">Preço</f:facet>
+            <f:facet name="header">
+            <p:inputText placeholder= "buscar"/>
+            Preço
+            </f:facet>
             #{c.valor}
         </p:column>
         
         <p:column>
-            <f:facet name="header">Quantidade</f:facet>
+            <f:facet name="header">
+            <p:inputText placeholder= "buscar"/>
+            Quantidade
+            </f:facet>
             #{c.qtd}
  		</p:column>
  		  
  		 <p:column>
-            <f:facet name="header">Categoria</f:facet>
+            <f:facet name="header">
+            <p:inputText placeholder= "buscar"/>
+            Categoria
+            </f:facet>
             #{c.categoria.descricao}
  		 </p:column>
  		 
