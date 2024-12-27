@@ -8,14 +8,13 @@
 
 
  <h:head>
-	
+	<f:event type="preRenderView" listener="#{produtoController.init}" />
 </h:head>
-
 
 
 <h:body>
 
-<f:event type="preRenderView" listener="#{produtoController.init}" />
+
 
 	<h:form>
 		<p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
@@ -60,19 +59,12 @@
 		        <p:commandButton rendered="#{produtoController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct" />
 		
 	</h:form>
-		
-	 
-	 
-  	<h:form style="text-align: right;">
+	
+	
     	<p:commandButton value="Buscar" icon="ui-icon-search" />
-	</h:form>
-
-	<h:form>
 	
-	</h:form>
-  
 	
-    <p:dataTable value = "#{produtoController.listProduto}" var="c" id="dtProduct">
+    <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct">
          <p:column>
             <f:facet name="header">
             

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.persistence.JoinColumn;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,10 @@ public class CategoriaController {
 	@PostConstruct
 	public void init() {
 		try {
+			if (!FacesContext.getCurrentInstance().isPostback() && 
+					!FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listCategoria = this.categoriaDAO.findAll();
+			}
 		} catch(Exception e) {
 			System.err.println(e);			
 		}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -29,6 +29,16 @@ public class ProdutoController {
 	
 	private List<Produto> listProduto;
 	
+	private List<Produto> filteredListProduto;
+	
+	public List<Produto> getFilteredListProduto() {
+		return filteredListProduto;
+	}
+
+	public void setFilteredListProduto(List<Produto> filteredListProduto) {
+		this.filteredListProduto = filteredListProduto;
+	}
+
 	private EditMode editMode = EditMode.VIEW;
 	
 	public void setMode(EditMode editMode) {
@@ -38,7 +48,10 @@ public class ProdutoController {
 	@PostConstruct
 	public void init() {
 		try {
+			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
+			filteredListProduto = listProduto;
+			}
 		} catch(Exception e){
 			System.err.println(e);
 		}
