@@ -67,14 +67,20 @@
     <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct">
          <p:column>
             <f:facet name="header">
-            
-            	<p:inputText placeholder= "buscar"/>
+	            <h:form >
+	            	<p:inputText placeholder= "buscar" value = "#{produtoController.produtoSearch}"
+	            	 >
+	            	<p:ajax event="keyup" listener="#{produtoController.controlSearchDescricao}"
+	            	update = "dtProduct" delay="10"
+	            	
+	            	/>
+	            	</p:inputText>
+            	</h:form>
+            	
             	 Nome
-            		
+   
             </f:facet>
-           
             #{c.descricao}
-            
         </p:column>
         	
         

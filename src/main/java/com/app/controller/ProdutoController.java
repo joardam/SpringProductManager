@@ -1,5 +1,6 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,9 @@ public class ProdutoController {
 	
 	private Produto produto = new Produto();
 	
+	private String produtoSearch;
+	
+	
 	private List<Produto> listProduto;
 	
 	private List<Produto> filteredListProduto;
@@ -34,6 +38,10 @@ public class ProdutoController {
 	public List<Produto> getFilteredListProduto() {
 		return filteredListProduto;
 	}
+	
+	
+	
+	
 
 	public void setFilteredListProduto(List<Produto> filteredListProduto) {
 		this.filteredListProduto = filteredListProduto;
@@ -50,7 +58,10 @@ public class ProdutoController {
 		try {
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
-			filteredListProduto = listProduto;
+			resetFilteredList();
+			
+			
+			
 			}
 		} catch(Exception e){
 			System.err.println(e);
@@ -58,7 +69,58 @@ public class ProdutoController {
 	}
 	
 	
+	public void resetFilteredList() {
+		try {
+			filteredListProduto =  new ArrayList<>();
+			for (Produto produto : listProduto) {
+				filteredListProduto.add(produto);
+			}
+			
+		} catch(Exception e){
+			System.err.println(e);
+		}
+	}
 	
+	
+	
+	public void controlSearchDescricao() {
+		try {
+			
+			this.resetFilteredList();
+			String produtoSearchClone = produtoSearch.trim();
+			
+			
+			if(produtoSearch.isEmpty() || produtoSearch == null) {
+				
+			} 
+			else {
+				
+				List<Produto> tempListProduto = new ArrayList<>();
+
+				for(Produto produto : listProduto) {
+					tempListProduto.add(produto);
+				}	
+				
+				for(Produto produto : tempListProduto) {
+					if(produto.getDescricao().contains(produtoSearchClone)) {
+						continue;
+					} else {
+						filteredListProduto.remove(produto);
+					}
+					
+					
+				}
+			}
+			
+		
+			
+			
+			
+		}catch(Exception e) {
+			System.err.println(e);
+		}
+		
+	}
 	
 	
 	public List<Produto> getListProduto() {
@@ -143,6 +205,22 @@ public class ProdutoController {
 			System.err.println(e);
 		}
 		return null;
+	}
+
+
+
+
+
+	public String getProdutoSearch() {
+		return produtoSearch;
+	}
+
+
+
+
+
+	public void setProdutoSearch(String produtoSearch) {
+		this.produtoSearch = produtoSearch;
 	}
 	
 	
