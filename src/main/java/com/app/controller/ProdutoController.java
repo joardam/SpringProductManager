@@ -2,6 +2,7 @@ package com.app.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -28,7 +29,10 @@ public class ProdutoController {
 	
 	private Produto produto = new Produto();
 	
-	private String produtoSearch;
+	private String filterSearchDescricao = "";
+	private String filterSearchValor = "" ;
+	private String filterSearchQtd = "";
+	private String filterSearchCategoria = "";
 	
 	
 	private List<Produto> listProduto;
@@ -58,7 +62,7 @@ public class ProdutoController {
 		try {
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
-			resetFilteredList();
+			hardResetFilteredList();
 			
 			
 			
@@ -69,7 +73,7 @@ public class ProdutoController {
 	}
 	
 	
-	public void resetFilteredList() {
+	public void hardResetFilteredList() {
 		try {
 			filteredListProduto =  new ArrayList<>();
 			for (Produto produto : listProduto) {
@@ -83,39 +87,45 @@ public class ProdutoController {
 	
 	
 	
+
+	
+	
 	public void controlSearchDescricao() {
 		try {
+			this.hardResetFilteredList();
+			String filterSearchDescricaoClone = filterSearchDescricao.trim();
+			String filterSearchValorClone = filterSearchValor.trim();
+			String filterSearchQtdClone = filterSearchQtd.trim();
+			String filterSearchCategoriaClone = filterSearchCategoria.trim();
 			
-			this.resetFilteredList();
-			String produtoSearchClone = produtoSearch.trim();
 			
-			
-			if(produtoSearch.isEmpty() || produtoSearch == null) {
+			if(filterSearchDescricao.isEmpty()) {
 				
 			} 
 			else {
 				
-				List<Produto> tempListProduto = new ArrayList<>();
-
-				for(Produto produto : listProduto) {
-					tempListProduto.add(produto);
-				}	
-				
-				for(Produto produto : tempListProduto) {
-					if(produto.getDescricao().contains(produtoSearchClone)) {
-						continue;
-					} else {
-						filteredListProduto.remove(produto);
-					}
-					
-					
+				this.filteredListProduto = filteredListProduto.stream().
+						filter(produto -> (
+								produto.getDescricao().contains(filterSearchDescricaoClone))
+								)
+                        .collect(Collectors.toList());
 				}
+			
+			
+			
+			if(filterSearchValor.isEmpty()) {
+				
 			}
 			
-		
+			else {
+				this.filteredListProduto = filteredListProduto.stream().
+						filter(produto -> (
+								Double.toString(produto.getValor()).contains(filterSearchValorClone))
+								)
+                        .collect(Collectors.toList());
+			}
 			
-			
-			
+
 		}catch(Exception e) {
 			System.err.println(e);
 		}
@@ -143,9 +153,11 @@ public class ProdutoController {
 			
 			case VIEW:
 				listProduto.add(this.produto);
+				controlSearchDescricao();
 				break;	
 			}
 			cancel();
+			
 			
 			
 		} catch(Exception e){
@@ -175,6 +187,7 @@ public class ProdutoController {
 		try {
 			produtoDAO.remove(produto);
 			listProduto.remove(produto);
+			controlSearchDescricao();
 			
 		} catch(Exception e){
 			System.err.println(e);
@@ -211,19 +224,70 @@ public class ProdutoController {
 
 
 
-	public String getProdutoSearch() {
-		return produtoSearch;
+	public String getFilterSearchDescricao() {
+		return filterSearchDescricao;
 	}
 
 
 
 
 
-	public void setProdutoSearch(String produtoSearch) {
-		this.produtoSearch = produtoSearch;
+	public void setFilterSearchDescricao(String filterSearchDescricao) {
+		this.filterSearchDescricao = filterSearchDescricao;
 	}
-	
-	
+
+
+
+
+
+	public String getFilterSearchValor() {
+		return filterSearchValor;
+	}
+
+
+
+
+
+	public void setFilterSearchValor(String filterSearchValor) {
+		this.filterSearchValor = filterSearchValor;
+	}
+
+
+
+
+
+	public String getFilterSearchQtd() {
+		return filterSearchQtd;
+	}
+
+
+
+
+
+	public void setFilterSearchQtd(String filterSearchQtd) {
+		this.filterSearchQtd = filterSearchQtd;
+	}
+
+
+
+
+
+	public String getFilterSearchCategoria() {
+		return filterSearchCategoria;
+	}
+
+
+
+
+
+	public void setFilterSearchCategoria(String filterSearchCategoria) {
+		this.filterSearchCategoria = filterSearchCategoria;
+	}
+
+
+
+
+
 	
 	
 }
