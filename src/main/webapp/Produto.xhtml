@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+
+
+ <h:head>
+	<f:event type="preRenderView" listener="#{produtoController.init}" />
+</h:head>
+
+
+<h:body>
+
+
+
+	<h:form>
+		<p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
+	</h:form>
+	
+	 
+	<h:form id="frmProduct">
+    
+    	
+    		<p:outputLabel value="Adicionar Produto" />
+	   
+	   
+		    	<p:panelGrid columns="12" cellpadding="1">
+		        <!-- Nome -->
+		        <p:outputLabel value="Nome" for="nome" />
+		        <p:inputText id="nome" value="#{produtoController.produto.descricao}" />
+		        
+		        <!-- Valor -->
+		        <p:outputLabel value="Valor" for="valor" />
+		        <p:inputText id="valor" value="#{produtoController.produto.valor}" />
+		        
+		     	
+		     
+		        <!-- Quantidade -->
+		        <p:outputLabel value="Quantidade" for="quantidade" />
+		        <p:inputText id="quantidade" value="#{produtoController.produto.qtd}" />
+				
+				
+			<!-- Categoria -->
+		<p:outputLabel value="Categoria" for="categoria" />
+		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
+		    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+		    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
+		</p:selectOneMenu>
+	
+		        
+				</p:panelGrid>
+				
+				
+		        <!-- Botões -->
+		        <p:commandButton value="Salvar" action="#{produtoController.save}" update="frmProduct dtProduct" />
+		        <p:commandButton rendered="#{produtoController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct" />
+		
+	</h:form>
+	
+	
+    	<p:commandButton value="Buscar" icon="ui-icon-search" />
+	
+	
+    <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct">
+         <p:column>
+            <f:facet name="header">
+	            <h:form >
+	            	<p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchDescricao}"
+	            	 >
+	            	<p:ajax event="keyup" listener="#{produtoController.controlSearchDescricao}"
+	            	update = "dtProduct" delay="250"
+	            	
+	            	/>
+	            	</p:inputText>
+            	</h:form>
+            	
+            	 Nome
+   
+            </f:facet>
+            #{c.descricao}
+        </p:column>
+        	
+        
+        <p:column>
+            <f:facet name="header">
+            
+              <h:form >
+	            	<p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchValor}"
+	            	 >
+	            	<p:ajax event="keyup" listener="#{produtoController.controlSearchDescricao}"
+	            	update = "dtProduct" delay="250"
+	            	
+	            	/>
+	            	</p:inputText>
+            	</h:form>
+          
+            Preço
+            </f:facet>
+            #{c.valor}
+        </p:column>
+        
+        <p:column>
+            <f:facet name="header">
+            <p:inputText placeholder= "buscar"/>
+            Quantidade
+            </f:facet>
+            #{c.qtd}
+ 		</p:column>
+ 		  
+ 		 <p:column>
+            <f:facet name="header">
+            <p:inputText placeholder= "buscar"/>
+            Categoria
+            </f:facet>
+            #{c.categoria.descricao}
+ 		 </p:column>
+ 		 
+ 		 
+ 		  <p:column>
+            <f:facet name="header">Ação</f:facet>
+            <p:commandButton value="Excluir" action="#{produtoController.remove(c)}" 
+            onclick="return window.confirm('confirma ?')"
+            update = "dtProduct">
+               
+            </p:commandButton>
+
+            <p:commandButton value="Editar" action="#{produtoController.edit(c)}"
+            update = "frmProduct dtProduct" >
+                
+            </p:commandButton>
+        </p:column>
+ 		 
+ 		 
+    </p:dataTable>
+	
+	<h:message for="categoria" style="color: red; font-weight: bold;" />
+	
+	
+</h:body>
+
+</html>

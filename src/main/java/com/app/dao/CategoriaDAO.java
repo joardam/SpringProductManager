@@ -71,6 +71,33 @@ public class CategoriaDAO {
 	}
 	
 	
+	public Categoria remove(Categoria categoria) {
+		Session session = new ConnectionFactory().getConnection();
+		
+		try {
+			session.getTransaction().begin();
+			
+			String hql = "UPDATE Produto p SET p.categoria = NULL WHERE p.categoria = :categoria";
+	        session.createQuery(hql)
+	               .setParameter("categoria", categoria)
+	               .executeUpdate();
+
+	       
+			session.remove(categoria);
+			session.getTransaction().commit();
+			
+		}catch(Exception e){
+			System.err.println(e);
+			session.getTransaction().rollback();
+			
+		}finally {
+			session.close();
+		}
+		
+		return categoria;
+	}
+	
+	
 	public Categoria removeById(Integer id) {
 		Session session = new ConnectionFactory().getConnection();
 		Categoria categoria = null;
@@ -79,6 +106,12 @@ public class CategoriaDAO {
 			categoria = session.find(Categoria.class,id);
 			
 			session.getTransaction().begin();
+			
+			String hql = "UPDATE Produto p SET p.categoria = NULL WHERE p.categoria = :categoria";
+	        session.createQuery(hql)
+	               .setParameter("categoria", categoria)
+	               .executeUpdate();
+			
 			session.remove(categoria);
 			session.getTransaction().commit();
 			

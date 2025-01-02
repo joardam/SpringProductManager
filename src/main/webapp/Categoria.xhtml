@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	>
+	
+
+ <h:head>
+	<f:event type="preRenderView" listener="#{categoriaController.init}" />
+</h:head>
+
+
+
+
+<h:body>
+
+
+
+<h:form>
+<p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
+</h:form>
+
+<h1> Cadastro de Categoria </h1>
+	
+	<h:form id = "frmCategoria">
+	
+	<p:outputLabel value="Nome: " />
+	<p:inputText value="#{categoriaController.categoria.descricao}" />
+   
+    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria" >
+    
+    </p:commandButton>
+	
+	
+	
+    <p:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" update="frmCategoria">
+    </p:commandButton>
+   </h:form>
+
+    <p:dataTable value = "#{categoriaController.listCategoria}" var="c" id="dtCategoria">
+        <p:column>
+            <f:facet name="header">Nome</f:facet>
+            #{c.descricao}
+        </p:column>
+ 		 
+ 		 
+ 		  <p:column>
+           <f:facet name="header">Ação</f:facet>
+           <p:commandButton value="Excluir" 
+           action="#{categoriaController.remove(c)}" 
+           onclick="return window.confirm('Tem certeza , ao apagar essa Categoria? Todos itens relacionados essa categoria serão associados a NULL')"
+           update="dtCategoria">
+                
+            </p:commandButton>
+
+            <p:commandButton value="Editar" action="#{categoriaController.edit(c)}" update="frmCategoria">
+                
+            </p:commandButton>
+        </p:column>
+ 		 
+ 		 
+    </p:dataTable>
+	
+	
+</h:body>
+
+</html>
