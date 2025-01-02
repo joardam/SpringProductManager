@@ -91,46 +91,52 @@ public class ProdutoController {
 	
 	
 	public void controlSearchDescricao() {
-		try {
-			this.hardResetFilteredList();
-			String filterSearchDescricaoClone = filterSearchDescricao.trim();
-			String filterSearchValorClone = filterSearchValor.trim();
-			String filterSearchQtdClone = filterSearchQtd.trim();
-			String filterSearchCategoriaClone = filterSearchCategoria.trim();
-			
-			
-			if(filterSearchDescricao.isEmpty()) {
-				
-			} 
-			else {
-				
-				this.filteredListProduto = filteredListProduto.stream().
-						filter(produto -> (
-								produto.getDescricao().contains(filterSearchDescricaoClone))
-								)
-                        .collect(Collectors.toList());
-				}
-			
-			
-			
-			if(filterSearchValor.isEmpty()) {
-				
-			}
-			
-			else {
-				this.filteredListProduto = filteredListProduto.stream().
-						filter(produto -> (
-								Double.toString(produto.getValor()).contains(filterSearchValorClone))
-								)
-                        .collect(Collectors.toList());
-			}
-			
+	    try {
+	        this.hardResetFilteredList();
 
-		}catch(Exception e) {
-			System.err.println(e);
-		}
-		
+	        String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
+	        String filterSearchValorClone = filterSearchValor.trim().toLowerCase();
+	        String filterSearchQtdClone = filterSearchQtd.trim().toLowerCase();
+	        String filterSearchCategoriaClone = filterSearchCategoria.trim().toLowerCase();
+
+	        this.filteredListProduto = filteredListProduto.stream()
+	            .filter(produto -> filterSearchDescricaoClone.isEmpty() || 
+	                safeContains(produto.getDescricao(), filterSearchDescricaoClone))
+	            .filter(produto -> filterSearchValorClone.isEmpty() || 
+	                safeContains(produto.getValor(), filterSearchValorClone))
+	            .filter(produto -> filterSearchQtdClone.isEmpty() || 
+	                safeContains(produto.getQtd(), filterSearchQtdClone))
+	            .filter(produto -> filterSearchCategoriaClone.isEmpty() || 
+	                safeContains(produto.getCategoria() != null ? produto.getCategoria().getDescricao() : null, filterSearchCategoriaClone))
+	            .collect(Collectors.toList());
+	    } catch (Exception e) {
+	        System.err.println(e);
+	    }
 	}
+
+	
+	/**
+	 * Verifica se o valor de origem contém o filtro, lidando com null.
+	 * 
+	 * @param source O valor de origem.
+	 * @param filter O valor a ser buscado.
+	 * @return true se o source contém o filter; false caso contrário.
+	 */
+	private boolean safeContains(String source, String filter) {
+	    return source != null && filter != null && source.toLowerCase().contains(filter);
+	}
+
+	/**
+	 * Sobrecarga para números, convertendo para String antes de verificar.
+	 * 
+	 * @param source O valor de origem.
+	 * @param filter O valor a ser buscado.
+	 * @return true se o source contém o filter; false caso contrário.
+	 */
+	private boolean safeContains(Number source, String filter) {
+	    return source != null && filter != null && source.toString().contains(filter);
+	}
+	
 	
 	
 	public List<Produto> getListProduto() {
@@ -153,9 +159,10 @@ public class ProdutoController {
 			
 			case VIEW:
 				listProduto.add(this.produto);
-				controlSearchDescricao();
+				
 				break;	
 			}
+			controlSearchDescricao();
 			cancel();
 			
 			
