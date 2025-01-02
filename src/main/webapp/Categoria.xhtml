@@ -39,9 +39,26 @@
     </p:commandButton>
    </h:form>
 
-    <p:dataTable value = "#{categoriaController.listCategoria}" var="c" id="dtCategoria">
+    <p:dataTable value = "#{categoriaController.filteredListCategoria}" var="c" id="dtCategoria">
+        
+        
+        
         <p:column>
-            <f:facet name="header">Nome</f:facet>
+            <f:facet name="header">
+            
+            <h:form >
+           
+           <p:inputText placeholder= "buscar" value = "#{categoriaController.filterSearchDescricao}"
+	            	 >
+	            	<p:ajax event="keyup" listener="#{categoriaController.controlSearch}"
+	            	update = "dtCategoria" delay="250"
+	  
+	            	/>
+	            	</p:inputText>
+          </h:form>
+            
+            Nome
+            </f:facet>
             #{c.descricao}
         </p:column>
  		 

@@ -62,7 +62,8 @@ public class ProdutoController {
 		try {
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
-			hardResetFilteredList();
+			this.hardResetFilteredList();
+			this.resetLoad();
 			
 			
 			
@@ -90,7 +91,7 @@ public class ProdutoController {
 
 	
 	
-	public void controlSearchDescricao() {
+	public void controlSearch() {
 	    try {
 	        this.hardResetFilteredList();
 
@@ -162,7 +163,7 @@ public class ProdutoController {
 				
 				break;	
 			}
-			controlSearchDescricao();
+			controlSearch();
 			cancel();
 			
 			
@@ -194,7 +195,7 @@ public class ProdutoController {
 		try {
 			produtoDAO.remove(produto);
 			listProduto.remove(produto);
-			controlSearchDescricao();
+			controlSearch();
 			
 		} catch(Exception e){
 			System.err.println(e);
@@ -213,12 +214,25 @@ public class ProdutoController {
 	
 	public void cancel(){
         this.editMode = EditMode.VIEW;
-        this.produto = new Produto() ;
+        this.produto = new Produto();
     }
+	
+	public void resetLoad() {
+		cancel();
+		filterSearchDescricao = "";
+		filterSearchValor = "" ;
+		filterSearchQtd = "";
+		filterSearchCategoria = "";
+		controlSearch();
+		
+		
+		
+	}
 	
 	public String goToMenu() {
 		try{
-		cancel();
+		resetLoad();
+		
 		return "Menu.xhtml?faces-redirect=true";
 		
 		} catch(Exception e) {

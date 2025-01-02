@@ -1,6 +1,8 @@
 package com.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -14,6 +16,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import com.app.dao.CategoriaDAO;
 import com.app.enums.EditMode;
 import com.app.model.Categoria;
+import com.app.model.Produto;
 
 
 @Component
@@ -28,6 +31,7 @@ public class CategoriaController {
 	
 	private Categoria categoria = new Categoria();
 	
+	private String filterSearchDescricao = "";
 	
 	public CategoriaDAO getCategoriaDAO() {
 		return categoriaDAO;
@@ -54,6 +58,9 @@ public class CategoriaController {
 	}
 
 	private List<Categoria> listCategoria;
+	private List<Categoria> filteredListCategoria;
+	
+	
 	
 	
 	private EditMode editMode = EditMode.VIEW;
@@ -66,6 +73,8 @@ public class CategoriaController {
 			if (!FacesContext.getCurrentInstance().isPostback() && 
 					!FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listCategoria = this.categoriaDAO.findAll();
+			this.hardResetFilteredList();
+			this.resetLoad();
 			}
 		} catch(Exception e) {
 			System.err.println(e);			
@@ -75,6 +84,51 @@ public class CategoriaController {
 	public void setMode(EditMode editMode) {
 		this.editMode = editMode;
 	}
+	
+	
+	public void hardResetFilteredList() {
+		try {
+			filteredListCategoria =  new ArrayList<>();
+			for (Categoria categoria : listCategoria) {
+				filteredListCategoria.add(categoria);
+			}
+			
+		} catch(Exception e){
+			System.err.println(e);
+		}
+	}
+	
+	
+	public void controlSearch() {
+		
+		try {
+			
+		this.hardResetFilteredList();
+		
+		String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
+		
+		this.filteredListCategoria = filteredListCategoria.stream()
+			.filter(categoria -> filterSearchDescricao.isEmpty() ||
+					safeContains(categoria.getDescricao() , filterSearchDescricaoClone))
+			.collect(Collectors.toList());
+	
+		} catch (Exception e) {
+	        System.err.println(e);
+	    }
+	}
+	
+	/**
+	 * Verifica se o valor de origem contém o filtro, lidando com null.
+	 * 
+	 * @param source O valor de origem.
+	 * @param filter O valor a ser buscado.
+	 * @return true se o source contém o filter; false caso contrário.
+	 */
+	private boolean safeContains(String source, String filter) {
+	    return source != null && filter != null && source.toLowerCase().contains(filter);
+	}
+
+	
 	
 	public List<Categoria> getListCategoria(){
 		return this.listCategoria;
@@ -116,10 +170,20 @@ public class CategoriaController {
 		try {
 			categoriaDAO.remove(categoria);
 			listCategoria.remove(categoria);
+			controlSearch();
 			
 		} catch(Exception e) {
 			System.err.println(e);
 		}
+		
+	}
+	
+	public void resetLoad() {
+		cancel();
+		filterSearchDescricao = "";
+		controlSearch();
+		
+		
 		
 	}
 	
@@ -139,13 +203,29 @@ public class CategoriaController {
 	
 	public String goToMenu() {
 		try{
-		cancel();
+		resetLoad();
 		return "Menu.xhtml?faces-redirect=true";
 		
 		} catch(Exception e) {
 			System.err.println(e);
 		}
 		return null;
+	}
+
+	public String getFilterSearchDescricao() {
+		return filterSearchDescricao;
+	}
+
+	public void setFilterSearchDescricao(String filterSearchDescricao) {
+		this.filterSearchDescricao = filterSearchDescricao;
+	}
+
+	public List<Categoria> getFilteredListCategoria() {
+		return filteredListCategoria;
+	}
+
+	public void setFilteredListCategoria(List<Categoria> filteredListCategoria) {
+		this.filteredListCategoria = filteredListCategoria;
 	}
 
 	
