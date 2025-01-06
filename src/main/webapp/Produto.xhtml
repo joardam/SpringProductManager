@@ -1,109 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html >
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-
- <h:head>
-	<f:event type="preRenderView" listener="#{produtoController.init}" />
+<h:head>
+    <f:event type="preRenderView" listener="#{produtoController.init}" />
+     <h:outputStylesheet name="css/style.css" />
 </h:head>
-
 
 <h:body>
 
+    <!-- Formulário de navegação -->
+    <h:form>
+        <p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" styleClass="btn-nav"/>
+    </h:form>
+
+    <!-- Formulário de Adição de Produto -->
+    <h:form id="frmProduct">
 
 
-	<h:form>
-		<p:commandButton value="Voltar ao Menu" action="#{categoriaController.goToMenu}" />
-	</h:form>
-	
-	 
-	<h:form id="frmProduct">
-    
-    	
-    		<p:outputLabel value="Adicionar Produto" />
-	   
-	   
-		    	<p:panelGrid columns="12" cellpadding="1">
-		        <!-- Nome -->
-		        <p:outputLabel value="Nome" for="nome" />
-		        <p:inputText id="nome" value="#{produtoController.produto.descricao}" />
-		        
-		        <!-- Valor -->
-		        <p:outputLabel value="Valor" for="valor" />
-		        <p:inputText id="valor" value="#{produtoController.produto.valor}" />
-		        
-		     	
-		     
-		        <!-- Quantidade -->
-		        <p:outputLabel value="Quantidade" for="quantidade" />
-		        <p:inputText id="quantidade" value="#{produtoController.produto.qtd}" />
-				
-				
-			<!-- Categoria -->
-		<p:outputLabel value="Categoria" for="categoria" />
-		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}" filter = "true">
-		    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-		    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
-		</p:selectOneMenu>
-	
-		        
-				</p:panelGrid>
-				
-				
-		        <!-- Botões -->
-		        <p:commandButton value="Salvar" action="#{produtoController.save}" update="frmProduct"  process="frmProduct"  
-		          oncomplete="PF('dtProductWidget').filter();"
-		         />
-		        <p:commandButton rendered="#{produtoController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct" />
-		
-	</h:form>
-	
-	
-	
-	<h:form id = "dtProduct" >
-    <p:dataTable widgetVar="dtProductWidget" value = "#{produtoController.listProduto}" filteredValue = "#{produtoController.filteredListProduto}" var="c" paginator = "false" >
-        
-        
-         <p:column headerText = "Nome" sortBy = "#{c.descricao}" filterBy = "#{c.descricao}" filterMatchMode = "contains">
-            <h:outputText value="#{c.descricao}" />
-        </p:column>
-        	
-        
-        <p:column headerText = "Preço" sortBy = "#{c.valor}" filterBy = "#{c.valor}">
-            <h:outputText value="#{c.valor}" />
-        </p:column>
-        
-       <p:column headerText = "Quantidade" sortBy = "#{c.qtd}" filterBy = "#{c.qtd}">
-            <h:outputText value="#{c.qtd}" />
-        </p:column>
- 		  
- 		 <p:column headerText = "Categoria" sortBy = "#{c.categoria.descricao}" filterBy = "#{c.categoria.descricao}">
-            <h:outputText value="#{c.categoria.descricao}" />
-        </p:column>
- 		 
- 		 
- 		  <p:column headerText = "Ação">
-            <p:commandButton value="Excluir" action="#{produtoController.remove(c)}" 
-            onclick="return window.confirm('confirma ?')"
-            update = "dtProduct">
-               
-            </p:commandButton>
+     <h:panelGrid columns="3" cellpadding="3" styleClass="form-container">
+            <!-- Nome -->
+            <p:outputLabel value="Nome" for="nome" />
+            <p:inputText id="nome" value="#{produtoController.produto.descricao}" required="true" />
 
-            <p:commandButton value="Editar" action="#{produtoController.edit(c)}"
-            update = "frmProduct dtProduct" >
-                
-            </p:commandButton>
-        </p:column>
-    </p:dataTable>
-</h:form>   
-	
-	<h:message for="categoria" style="color: red; font-weight: bold;" />
-	
-	
+            <!-- Valor -->
+            <p:outputLabel value="Valor" for="valor" />
+            <p:inputText id="valor" value="#{produtoController.produto.valor}" required="true" />
+
+            <!-- Quantidade -->
+            <p:outputLabel value="Quantidade" for="quantidade" />
+            <p:inputText id="quantidade" value="#{produtoController.produto.qtd}" required="true" />
+
+            <!-- Categoria -->
+            <p:outputLabel value="Categoria" for="categoria" />
+            <p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}" filter="true" required="true">
+                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+                <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
+            </p:selectOneMenu>
+        
+
+        <!-- Botões -->
+       
+            <p:commandButton value="Salvar" action="#{produtoController.save}" 
+            				 update="frmProduct"
+            				 process="frmProduct"
+            				 oncomplete="PF('dtProductWidget').filter()"
+            				 styleClass="btn-save"  />
+            <p:commandButton rendered="#{produtoController.editMode == 'EDIT'}" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct dtProduct" styleClass="btn-cancel" />
+      </h:panelGrid>
+
+    </h:form>
+
+    <!-- Tabela de Produtos -->
+    <h:form id="dtProduct">
+        <p:dataTable widgetVar="dtProductWidget" value="#{produtoController.listProduto}" filteredValue="#{produtoController.filteredListProduto}" var="c" paginator="true" rows="10" styleClass="product-table">
+
+            <p:column headerText="Nome" sortBy="#{c.descricao}" filterBy="#{c.descricao}" filterMatchMode="contains">
+                <h:outputText value="#{c.descricao}" />
+            </p:column>
+
+            <p:column headerText="Preço" sortBy="#{c.valor}" filterBy="#{c.valor}">
+                <h:outputText value="#{c.valor}" />
+            </p:column>
+
+            <p:column headerText="Quantidade" sortBy="#{c.qtd}" filterBy="#{c.qtd}">
+                <h:outputText value="#{c.qtd}" />
+            </p:column>
+
+            <p:column headerText="Categoria" sortBy="#{c.categoria.descricao}" filterBy="#{c.categoria.descricao}">
+                <h:outputText value="#{c.categoria.descricao}" />
+            </p:column>
+
+            <p:column headerText="Ação">
+                <p:commandButton value="Excluir" action="#{produtoController.remove(c)}" onclick="return window.confirm('Confirma a exclusão?')" update="dtProduct" styleClass="btn-delete" />
+                <p:commandButton value="Editar" action="#{produtoController.edit(c)}" update="frmProduct dtProduct" styleClass="btn-edit" />
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+
+    <!-- Mensagem de erro para o campo Categoria -->
+    <h:message for="categoria" style="color: red; font-weight: bold;" />
+
 </h:body>
 
 </html>

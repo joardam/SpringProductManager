@@ -1,0 +1,96 @@
+/* Estilos gerais */
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.btn-nav, .btn-save, .btn-cancel, .btn-delete, .btn-edit {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.btn-nav {
+    /* Custom styles for nav button */
+}
+
+.btn-save {
+    /* Custom styles for save button */
+}
+
+.btn-cancel {
+    /* Custom styles for cancel button */
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+}
+
+/* Tabela de produtos */
+.product-table {
+    width: 80%; /* Reduzindo a largura da tabela */
+    margin: 20px auto;
+    border-collapse: collapse; /* Para colapsar as bordas das células */
+}
+
+.product-table th, .product-table td {
+    padding: 5px 10px; /* Menor padding para tornar a tabela mais compacta */
+    border: 1px solid #ddd; /* Borda suave */
+    text-align: left; /* Alinhando o texto à esquerda */
+}
+
+.product-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.product-table td {
+    background-color: #fff;
+}
+
+/* Ajuste das larguras das colunas */
+.product-table .column-nome {
+    width: 30%; /* Reduzindo a largura da coluna "Nome" */
+}
+
+.product-table .column-preco {
+    width: 20%; /* Reduzindo a largura da coluna "Preço" */
+}
+
+.product-table .column-quantidade {
+    width: 15%; /* Reduzindo a largura da coluna "Quantidade" */
+}
+
+.product-table .column-categoria {
+    width: 25%; /* Reduzindo a largura da coluna "Categoria" */
+}
+
+.product-table .column-acao {
+    width: 10%; /* Reduzindo a largura da coluna "Ação" */
+}

@@ -29,7 +29,7 @@
 	<p:outputLabel value="Nome: " />
 	<p:inputText value="#{categoriaController.categoria.descricao}" />
    
-    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria" prodcess = "frmCategoria"
+    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria" process = "frmCategoria"
     oncomplete="PF('dtCategoriaWidget').filter()"
      >
     
