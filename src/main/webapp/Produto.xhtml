@@ -45,7 +45,7 @@
 				
 			<!-- Categoria -->
 		<p:outputLabel value="Categoria" for="categoria" />
-		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}">
+		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}" filter = "true">
 		    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
 		    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
 		</p:selectOneMenu>
@@ -61,7 +61,7 @@
 	</h:form>
 	
 	
-    <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct">
+    <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct" >
          <p:column>
             <f:facet name="header">
 	            <h:form >

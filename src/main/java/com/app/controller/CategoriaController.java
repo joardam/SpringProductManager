@@ -27,9 +27,8 @@ public class CategoriaController {
 	
 	@Autowired
 	private CategoriaDAO categoriaDAO;
-	
-	
 	private Categoria categoria = new Categoria();
+	
 	
 	private String filterSearchDescricao = "";
 	
@@ -155,6 +154,7 @@ public class CategoriaController {
 				break;
 			}	
 			cancel();
+			controlSearch();
 		}
 		
 		
