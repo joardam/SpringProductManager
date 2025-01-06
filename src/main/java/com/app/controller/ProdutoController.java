@@ -29,15 +29,15 @@ public class ProdutoController {
 	
 	private Produto produto = new Produto();
 	
-	private String filterSearchDescricao = "";
-	private String filterSearchValor = "" ;
-	private String filterSearchQtd = "";
-	private String filterSearchCategoria = "";
+//	private String filterSearchDescricao = "";
+//	private String filterSearchValor = "" ;
+//	private String filterSearchQtd = "";
+//	private String filterSearchCategoria = "";
 	
 	
 	private List<Produto> listProduto;
 	
-	private List<Produto> filteredListProduto;
+	private List<Produto> filteredListProduto  ;
 	
 	public List<Produto> getFilteredListProduto() {
 		return filteredListProduto;
@@ -62,8 +62,10 @@ public class ProdutoController {
 		try {
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
-			this.hardResetFilteredList();
-			this.resetLoad();
+			//New			filteredListProduto = this.produtoDAO.findAll();
+//			this.hardResetFilteredList();
+			this.cancel();
+			
 			
 			
 			
@@ -74,70 +76,70 @@ public class ProdutoController {
 	}
 	
 	
-	public void hardResetFilteredList() {
-		try {
-			filteredListProduto =  new ArrayList<>();
-			for (Produto produto : listProduto) {
-				filteredListProduto.add(produto);
-			}
-			
-		} catch(Exception e){
-			System.err.println(e);
-		}
-	}
-	
+//	public void hardResetFilteredList() {
+//		try {
+//			filteredListProduto =  new ArrayList<>();
+//			for (Produto produto : listProduto) {
+//				filteredListProduto.add(produto);
+//			}
+//			
+//		} catch(Exception e){
+//			System.err.println(e);
+//		}
+//	}
+//	
 	
 	
 
 	
 	
-	public void controlSearch() {
-	    try {
-	        this.hardResetFilteredList();
-
-	        String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
-	        String filterSearchValorClone = filterSearchValor.trim().toLowerCase();
-	        String filterSearchQtdClone = filterSearchQtd.trim().toLowerCase();
-	        String filterSearchCategoriaClone = filterSearchCategoria.trim().toLowerCase();
-
-	        this.filteredListProduto = filteredListProduto.stream()
-	            .filter(produto -> filterSearchDescricaoClone.isEmpty() || 
-	                safeContains(produto.getDescricao(), filterSearchDescricaoClone))
-	            .filter(produto -> filterSearchValorClone.isEmpty() || 
-	                safeContains(produto.getValor(), filterSearchValorClone))
-	            .filter(produto -> filterSearchQtdClone.isEmpty() || 
-	                safeContains(produto.getQtd(), filterSearchQtdClone))
-	            .filter(produto -> filterSearchCategoriaClone.isEmpty() || 
-	                safeContains(produto.getCategoria() != null ? produto.getCategoria().getDescricao() : null, filterSearchCategoriaClone))
-	            .collect(Collectors.toList());
-	    } catch (Exception e) {
-	        System.err.println(e);
-	    }
-	}
+//	public void controlSearch() {
+//	    try {
+//	        this.hardResetFilteredList();
+//
+//	        String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
+//	        String filterSearchValorClone = filterSearchValor.trim().toLowerCase();
+//	        String filterSearchQtdClone = filterSearchQtd.trim().toLowerCase();
+//	        String filterSearchCategoriaClone = filterSearchCategoria.trim().toLowerCase();
+//
+//	        this.filteredListProduto = filteredListProduto.stream()
+//	            .filter(produto -> filterSearchDescricaoClone.isEmpty() || 
+//	                safeContains(produto.getDescricao(), filterSearchDescricaoClone))
+//	            .filter(produto -> filterSearchValorClone.isEmpty() || 
+//	                safeContains(produto.getValor(), filterSearchValorClone))
+//	            .filter(produto -> filterSearchQtdClone.isEmpty() || 
+//	                safeContains(produto.getQtd(), filterSearchQtdClone))
+//	            .filter(produto -> filterSearchCategoriaClone.isEmpty() || 
+//	                safeContains(produto.getCategoria() != null ? produto.getCategoria().getDescricao() : null, filterSearchCategoriaClone))
+//	            .collect(Collectors.toList());
+//	    } catch (Exception e) {
+//	        System.err.println(e);
+//	    }
+//	}
 
 	
-	/**
-	 * Verifica se o valor de origem contém o filtro, lidando com null.
-	 * 
-	 * @param source O valor de origem.
-	 * @param filter O valor a ser buscado.
-	 * @return true se o source contém o filter; false caso contrário.
-	 */
-	private boolean safeContains(String source, String filter) {
-	    return source != null && filter != null && source.toLowerCase().contains(filter);
-	}
-
-	/**
-	 * Sobrecarga para números, convertendo para String antes de verificar.
-	 * 
-	 * @param source O valor de origem.
-	 * @param filter O valor a ser buscado.
-	 * @return true se o source contém o filter; false caso contrário.
-	 */
-	private boolean safeContains(Number source, String filter) {
-	    return source != null && filter != null && source.toString().contains(filter);
-	}
-	
+//	/**
+//	 * Verifica se o valor de origem contém o filtro, lidando com null.
+//	 * 
+//	 * @param source O valor de origem.
+//	 * @param filter O valor a ser buscado.
+//	 * @return true se o source contém o filter; false caso contrário.
+//	 */
+//	private boolean safeContains(String source, String filter) {
+//	    return source != null && filter != null && source.toLowerCase().contains(filter);
+//	}
+//
+//	/**
+//	 * Sobrecarga para números, convertendo para String antes de verificar.
+//	 * 
+//	 * @param source O valor de origem.
+//	 * @param filter O valor a ser buscado.
+//	 * @return true se o source contém o filter; false caso contrário.
+//	 */
+//	private boolean safeContains(Number source, String filter) {
+//	    return source != null && filter != null && source.toString().contains(filter);
+//	}
+//	
 	
 	
 	public List<Produto> getListProduto() {
@@ -160,10 +162,11 @@ public class ProdutoController {
 			
 			case VIEW:
 				listProduto.add(this.produto);
+				filteredListProduto.add(this.produto);
 				
 				break;	
 			}
-			controlSearch();
+//			controlSearch();
 			cancel();
 			
 			
@@ -195,7 +198,8 @@ public class ProdutoController {
 		try {
 			produtoDAO.remove(produto);
 			listProduto.remove(produto);
-			controlSearch();
+			filteredListProduto.remove(produto);
+//			controlSearch();
 			
 		} catch(Exception e){
 			System.err.println(e);
@@ -217,21 +221,21 @@ public class ProdutoController {
         this.produto = new Produto();
     }
 	
-	public void resetLoad() {
-		cancel();
-		filterSearchDescricao = "";
-		filterSearchValor = "" ;
-		filterSearchQtd = "";
-		filterSearchCategoria = "";
-		controlSearch();
-		
-		
-		
-	}
-	
+//	public void resetLoad() {
+//		cancel();
+////		filterSearchDescricao = "";
+////		filterSearchValor = "" ;
+////		filterSearchQtd = "";
+////		filterSearchCategoria = "";
+////		controlSearch();
+//		
+//		
+//		
+//	}
+//	
 	public String goToMenu() {
 		try{
-		resetLoad();
+		this.cancel();
 		
 		return "Menu.xhtml?faces-redirect=true";
 		
@@ -245,68 +249,68 @@ public class ProdutoController {
 
 
 
-	public String getFilterSearchDescricao() {
-		return filterSearchDescricao;
-	}
+//	public String getFilterSearchDescricao() {
+//		return filterSearchDescricao;
+//	}
 
 
 
-
-
-	public void setFilterSearchDescricao(String filterSearchDescricao) {
-		this.filterSearchDescricao = filterSearchDescricao;
-	}
-
-
-
-
-
-	public String getFilterSearchValor() {
-		return filterSearchValor;
-	}
-
-
-
-
-
-	public void setFilterSearchValor(String filterSearchValor) {
-		this.filterSearchValor = filterSearchValor;
-	}
-
-
-
-
-
-	public String getFilterSearchQtd() {
-		return filterSearchQtd;
-	}
-
-
-
-
-
-	public void setFilterSearchQtd(String filterSearchQtd) {
-		this.filterSearchQtd = filterSearchQtd;
-	}
-
-
-
-
-
-	public String getFilterSearchCategoria() {
-		return filterSearchCategoria;
-	}
-
-
-
-
-
-	public void setFilterSearchCategoria(String filterSearchCategoria) {
-		this.filterSearchCategoria = filterSearchCategoria;
-	}
-
-
-
+//
+//
+//	public void setFilterSearchDescricao(String filterSearchDescricao) {
+//		this.filterSearchDescricao = filterSearchDescricao;
+//	}
+//
+//
+//
+//
+//
+//	public String getFilterSearchValor() {
+//		return filterSearchValor;
+//	}
+//
+//
+//
+//
+//
+//	public void setFilterSearchValor(String filterSearchValor) {
+//		this.filterSearchValor = filterSearchValor;
+//	}
+//
+//
+//
+//
+//
+//	public String getFilterSearchQtd() {
+//		return filterSearchQtd;
+//	}
+//
+//
+//
+//
+//
+//	public void setFilterSearchQtd(String filterSearchQtd) {
+//		this.filterSearchQtd = filterSearchQtd;
+//	}
+//
+//
+//
+//
+//
+//	public String getFilterSearchCategoria() {
+//		return filterSearchCategoria;
+//	}
+//
+//
+//
+//
+//
+//	public void setFilterSearchCategoria(String filterSearchCategoria) {
+//		this.filterSearchCategoria = filterSearchCategoria;
+//	}
+//
+//
+//
 
 
 	

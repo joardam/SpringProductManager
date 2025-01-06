@@ -55,86 +55,38 @@
 				
 				
 		        <!-- Botões -->
-		        <p:commandButton value="Salvar" action="#{produtoController.save}" update="frmProduct dtProduct" />
+		        <p:commandButton value="Salvar" action="#{produtoController.save}" update="frmProduct"  process="frmProduct"  
+		          oncomplete="PF('dtProductWidget').filter();"
+		         />
 		        <p:commandButton rendered="#{produtoController.editMode == 'EDIT' }" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct" />
 		
 	</h:form>
 	
 	
-    <p:dataTable value = "#{produtoController.filteredListProduto}" var="c" id="dtProduct" >
-         <p:column>
-            <f:facet name="header">
-	            <h:form >
-	            	<p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchDescricao}"
-	            	 >
-	            	<p:ajax event="keyup" listener="#{produtoController.controlSearch}"
-	            	update = "dtProduct" delay="250"
-	            	
-	            	/>
-	            	</p:inputText>
-            	</h:form>
-            	
-            	 Nome
-   
-            </f:facet>
-            #{c.descricao}
+	
+	<h:form id = "dtProduct" >
+    <p:dataTable widgetVar="dtProductWidget" value = "#{produtoController.listProduto}" filteredValue = "#{produtoController.filteredListProduto}" var="c" paginator = "false" >
+        
+        
+         <p:column headerText = "Nome" sortBy = "#{c.descricao}" filterBy = "#{c.descricao}" filterMatchMode = "contains">
+            <h:outputText value="#{c.descricao}" />
         </p:column>
         	
         
-        <p:column>
-            <f:facet name="header">
-            
-              <h:form >
-	            	<p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchValor}"
-	            	 >
-	            	<p:ajax event="keyup" listener="#{produtoController.controlSearch}"
-	            	update = "dtProduct" delay="250"
-	            	
-	            	/>
-	            	</p:inputText>
-            	</h:form>
-          
-            Preço
-            </f:facet>
-            #{c.valor}
+        <p:column headerText = "Preço" sortBy = "#{c.valor}" filterBy = "#{c.valor}">
+            <h:outputText value="#{c.valor}" />
         </p:column>
         
-        <p:column>
-            <f:facet name="header">
-             <h:form >
-	            	<p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchQtd}"
-	            	 >
-	            	<p:ajax event="keyup" listener="#{produtoController.controlSearch}"
-	            	update = "dtProduct" delay="250"
-	            	
-	            	/>
-	            	</p:inputText>
-            	</h:form>
-            Quantidade
-            </f:facet>
-            #{c.qtd}
- 		</p:column>
+       <p:column headerText = "Quantidade" sortBy = "#{c.qtd}" filterBy = "#{c.qtd}">
+            <h:outputText value="#{c.qtd}" />
+        </p:column>
  		  
- 		 <p:column>
-            <f:facet name="header">
-           <h:form >
-           <p:inputText placeholder= "buscar" value = "#{produtoController.filterSearchCategoria}"
-	            	 >
-	            	<p:ajax event="keyup" listener="#{produtoController.controlSearch}"
-	            	update = "dtProduct" delay="250"
-	  
-	            	/>
-	            	</p:inputText>
-           </h:form>
-           
-            Categoria
-            </f:facet>
-            #{c.categoria.descricao}
- 		 </p:column>
+ 		 <p:column headerText = "Categoria" sortBy = "#{c.categoria.descricao}" filterBy = "#{c.categoria.descricao}">
+            <h:outputText value="#{c.categoria.descricao}" />
+        </p:column>
  		 
  		 
- 		  <p:column>
-            <f:facet name="header">Ação</f:facet>
+ 		  <p:column headerText = "Ação">
             <p:commandButton value="Excluir" action="#{produtoController.remove(c)}" 
             onclick="return window.confirm('confirma ?')"
             update = "dtProduct">
@@ -146,9 +98,8 @@
                 
             </p:commandButton>
         </p:column>
- 		 
- 		 
     </p:dataTable>
+</h:form>   
 	
 	<h:message for="categoria" style="color: red; font-weight: bold;" />
 	

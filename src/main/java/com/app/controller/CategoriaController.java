@@ -72,8 +72,9 @@ public class CategoriaController {
 			if (!FacesContext.getCurrentInstance().isPostback() && 
 					!FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listCategoria = this.categoriaDAO.findAll();
-			this.hardResetFilteredList();
-			this.resetLoad();
+//			this.hardResetFilteredList();
+//			this.resetLoad()
+			this.cancel();
 			}
 		} catch(Exception e) {
 			System.err.println(e);			
@@ -85,49 +86,49 @@ public class CategoriaController {
 	}
 	
 	
-	public void hardResetFilteredList() {
-		try {
-			filteredListCategoria =  new ArrayList<>();
-			for (Categoria categoria : listCategoria) {
-				filteredListCategoria.add(categoria);
-			}
-			
-		} catch(Exception e){
-			System.err.println(e);
-		}
-	}
+//	public void hardResetFilteredList() {
+//		try {
+//			filteredListCategoria =  new ArrayList<>();
+//			for (Categoria categoria : listCategoria) {
+//				filteredListCategoria.add(categoria);
+//			}
+//			
+//		} catch(Exception e){
+//			System.err.println(e);
+//		}
+//	}
 	
 	
-	public void controlSearch() {
-		
-		try {
-			
-		this.hardResetFilteredList();
-		
-		String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
-		
-		this.filteredListCategoria = filteredListCategoria.stream()
-			.filter(categoria -> filterSearchDescricao.isEmpty() ||
-					safeContains(categoria.getDescricao() , filterSearchDescricaoClone))
-			.collect(Collectors.toList());
-	
-		} catch (Exception e) {
-	        System.err.println(e);
-	    }
-	}
-	
-	/**
-	 * Verifica se o valor de origem contém o filtro, lidando com null.
-	 * 
-	 * @param source O valor de origem.
-	 * @param filter O valor a ser buscado.
-	 * @return true se o source contém o filter; false caso contrário.
-	 */
-	private boolean safeContains(String source, String filter) {
-	    return source != null && filter != null && source.toLowerCase().contains(filter);
-	}
-
-	
+//	public void controlSearch() {
+//		
+//		try {
+//			
+//		this.hardResetFilteredList();
+//		
+//		String filterSearchDescricaoClone = filterSearchDescricao.trim().toLowerCase();
+//		
+//		this.filteredListCategoria = filteredListCategoria.stream()
+//			.filter(categoria -> filterSearchDescricao.isEmpty() ||
+//					safeContains(categoria.getDescricao() , filterSearchDescricaoClone))
+//			.collect(Collectors.toList());
+//	
+//		} catch (Exception e) {
+//	        System.err.println(e);
+//	    }
+//	}
+//	
+//	/**
+//	 * Verifica se o valor de origem contém o filtro, lidando com null.
+//	 * 
+//	 * @param source O valor de origem.
+//	 * @param filter O valor a ser buscado.
+//	 * @return true se o source contém o filter; false caso contrário.
+//	 */
+//	private boolean safeContains(String source, String filter) {
+//	    return source != null && filter != null && source.toLowerCase().contains(filter);
+//	}
+//
+//	
 	
 	public List<Categoria> getListCategoria(){
 		return this.listCategoria;
@@ -151,10 +152,11 @@ public class CategoriaController {
 			
 			case VIEW:
 				listCategoria.add(this.categoria);
+				filteredListCategoria.add(this.categoria);
 				break;
 			}	
 			cancel();
-			controlSearch();
+//			controlSearch();
 		}
 		
 		
@@ -170,7 +172,8 @@ public class CategoriaController {
 		try {
 			categoriaDAO.remove(categoria);
 			listCategoria.remove(categoria);
-			controlSearch();
+			filteredListCategoria.remove(categoria);
+//			controlSearch();
 			
 		} catch(Exception e) {
 			System.err.println(e);
@@ -181,7 +184,7 @@ public class CategoriaController {
 	public void resetLoad() {
 		cancel();
 		filterSearchDescricao = "";
-		controlSearch();
+//		controlSearch();
 		
 		
 		
@@ -203,7 +206,9 @@ public class CategoriaController {
 	
 	public String goToMenu() {
 		try{
-		resetLoad();
+//		resetLoad();
+		//new
+		cancel();
 		return "Menu.xhtml?faces-redirect=true";
 		
 		} catch(Exception e) {

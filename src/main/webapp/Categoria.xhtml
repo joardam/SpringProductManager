@@ -29,7 +29,9 @@
 	<p:outputLabel value="Nome: " />
 	<p:inputText value="#{categoriaController.categoria.descricao}" />
    
-    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria" >
+    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria" prodcess = "frmCategoria"
+    oncomplete="PF('dtCategoriaWidget').filter()"
+     >
     
     </p:commandButton>
 	
@@ -39,27 +41,22 @@
     </p:commandButton>
    </h:form>
 
-    <p:dataTable value = "#{categoriaController.filteredListCategoria}" var="c" id="dtCategoria">
+
+
+
+	<h:form id = "dtCategoria">
+    <p:dataTable value = "#{categoriaController.listCategoria}" 
+    			 var="c"
+    			 widgetVar= "dtCategoriaWidget"
+    			 filteredValue = "#{categoriaController.filteredListCategoria}"
+    			 >
         
         
         
-        <p:column>
-            <f:facet name="header">
-            
-            <h:form >
-           
-           <p:inputText placeholder= "buscar" value = "#{categoriaController.filterSearchDescricao}"
-	            	 >
-	            	<p:ajax event="keyup" listener="#{categoriaController.controlSearch}"
-	            	update = "dtCategoria" delay="250"
-	  
-	            	/>
-	            	</p:inputText>
-          </h:form>
-            
-            Nome
-            </f:facet>
-            #{c.descricao}
+       
+        <p:column headerText = "Nome" sortBy = "#{c.descricao}" filterBy = "#{c.descricao}" filterMatchMode = "contains">
+            <h:outputText value="#{c.descricao}" />
+       
         </p:column>
  		 
  		 
@@ -79,7 +76,7 @@
  		 
  		 
     </p:dataTable>
-	
+</h:form>
 	
 </h:body>
 
