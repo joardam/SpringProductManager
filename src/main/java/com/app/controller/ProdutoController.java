@@ -37,7 +37,7 @@ public class ProdutoController {
 	
 	private List<Produto> listProduto;
 	
-	private List<Produto> filteredListProduto  ;
+	private List<Produto> filteredListProduto;
 	
 	public List<Produto> getFilteredListProduto() {
 		return filteredListProduto;
@@ -62,7 +62,9 @@ public class ProdutoController {
 		try {
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
-			//New			filteredListProduto = this.produtoDAO.findAll();
+			filteredListProduto = new ArrayList<>(listProduto);
+			
+//			filteredListProduto = this.produtoDAO.findAll();
 //			this.hardResetFilteredList();
 			this.cancel();
 			
@@ -163,6 +165,7 @@ public class ProdutoController {
 			case VIEW:
 				listProduto.add(this.produto);
 				filteredListProduto.add(this.produto);
+				
 				
 				break;	
 			}

@@ -7,6 +7,7 @@
 
 <h:head>
     <f:event type="preRenderView" listener="#{produtoController.init}" />
+    <f:event type="preRenderView" listener="#{categoriaController.init}" />
      <h:outputStylesheet name="css/style.css" />
 </h:head>
 
@@ -34,22 +35,23 @@
             <p:outputLabel value="Quantidade" for="quantidade" />
             <p:inputText id="quantidade" value="#{produtoController.produto.qtd}" required="true" />
 
-            <!-- Categoria -->
-            <p:outputLabel value="Categoria" for="categoria" />
-            <p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}" filter="true" required="true">
-                <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
-                <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
-            </p:selectOneMenu>
-        
+           		<!-- Categoria -->
+		<p:outputLabel value="Categoria" for="categoria" />
+		<p:selectOneMenu id="categoria" value="#{produtoController.produto.categoria}" converter="#{categoriaConverter}" filter = "true">
+		    <f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+		    <f:selectItems value="#{categoriaController.listCategoria}" var="categoria" itemValue="#{categoria}" itemLabel="#{categoria.descricao}" />
+		</p:selectOneMenu>
 
         <!-- Botões -->
        
             <p:commandButton value="Salvar" action="#{produtoController.save}" 
-            				 update="frmProduct"
+            				 update="frmProduct dtProduct"
             				 process="frmProduct"
             				 oncomplete="PF('dtProductWidget').filter()"
             				 styleClass="btn-save"  />
-            <p:commandButton rendered="#{produtoController.editMode == 'EDIT'}" value="Cancelar" action="#{produtoController.cancel}" update="frmProduct dtProduct" styleClass="btn-cancel" />
+            
+            <p:commandButton rendered="#{produtoController.editMode == 'EDIT'}" value="Cancelar" action="#{produtoController.cancel}" 
+            			update="frmProduct dtProduct" styleClass="btn-cancel" />
       </h:panelGrid>
 
     </h:form>

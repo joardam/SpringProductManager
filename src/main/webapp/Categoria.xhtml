@@ -29,7 +29,7 @@
 	<p:outputLabel value="Nome: " />
 	<p:inputText value="#{categoriaController.categoria.descricao}" />
    
-    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria" process = "frmCategoria"
+    <p:commandButton value="Salvar" action="#{categoriaController.save}" update="frmCategoria dtCategoria " process = "frmCategoria"
     oncomplete="PF('dtCategoriaWidget').filter()"
      >
     
@@ -37,7 +37,7 @@
 	
 	
 	
-    <p:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" update="frmCategoria">
+    <p:commandButton rendered="#{categoriaController.editMode == 'EDIT' }" value="Cancelar" action="#{categoriaController.cancel}" update="frmCategoria dtCategoria">
     </p:commandButton>
    </h:form>
 
