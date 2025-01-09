@@ -18,7 +18,6 @@ public static void main(String[] args) {
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		
 		
-		
 		CategoriaConverter categoriaConverter = (CategoriaConverter) context.getBean("categoriaConverter");
 		
 		

@@ -1,31 +1,46 @@
 package com.app.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.app.dao.ProdutoDAO;
 import com.app.enums.EditMode;
 import com.app.model.Produto;
 
-@Component
 @ManagedBean(name = "produtoController")
-@SessionScope
-public class ProdutoController {
+@ViewScoped
+
+
+public class ProdutoController implements Serializable {
+	
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public ProdutoController() {
+		System.out.println("Iniciou bean produtoController(Jsf)");
+	}
 	
 	@Autowired
-	private ProdutoDAO produtoDAO;
+	transient private ProdutoDAO produtoDAO;
 	
 	private Produto produto = new Produto();
 	
@@ -43,9 +58,6 @@ public class ProdutoController {
 		return filteredListProduto;
 	}
 	
-	
-	
-	
 
 	public void setFilteredListProduto(List<Produto> filteredListProduto) {
 		this.filteredListProduto = filteredListProduto;
@@ -60,9 +72,17 @@ public class ProdutoController {
 	@PostConstruct
 	public void init() {
 		try {
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		    ServletContext servletContext = (ServletContext) externalContext.getContext();
+		    WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext)
+		                              .getAutowireCapableBeanFactory()
+		                          .autowireBean(this);
+			
 			if (!FacesContext.getCurrentInstance().isPostback() && !FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listProduto = this.produtoDAO.findAll();
 			filteredListProduto = new ArrayList<>(listProduto);
+			
 			
 //			filteredListProduto = this.produtoDAO.findAll();
 //			this.hardResetFilteredList();

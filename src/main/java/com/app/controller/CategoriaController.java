@@ -1,17 +1,22 @@
 package com.app.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.persistence.JoinColumn;
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.app.dao.CategoriaDAO;
 import com.app.enums.EditMode;
@@ -19,14 +24,23 @@ import com.app.model.Categoria;
 import com.app.model.Produto;
 
 
-@Component
+
 @ManagedBean(name = "categoriaController")
-@SessionScope
-public class CategoriaController {
+@ViewScoped
+public class CategoriaController implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
+
 	@Autowired
-	private CategoriaDAO categoriaDAO;
+	transient private CategoriaDAO categoriaDAO;
+	
+	
 	private Categoria categoria = new Categoria();
 	
 	
@@ -69,9 +83,22 @@ public class CategoriaController {
 	@PostConstruct
 	public void init() {
 		try {
+			
+			
+			
+			
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		    ServletContext servletContext = (ServletContext) externalContext.getContext();
+		    WebApplicationContextUtils.getRequiredWebApplicationContext(servletContext)
+		                              .getAutowireCapableBeanFactory()
+		                          .autowireBean(this);
+			
+		    System.out.println("aqui foi iniciado um bean (JSF de CategoriaController)");
+			
 			if (!FacesContext.getCurrentInstance().isPostback() && 
 					!FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
 			listCategoria = this.categoriaDAO.findAll();
+			filteredListCategoria = new ArrayList<>(listCategoria);
 //			this.hardResetFilteredList();
 //			this.resetLoad()
 			this.cancel();
